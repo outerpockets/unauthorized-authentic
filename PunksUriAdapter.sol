@@ -43,10 +43,19 @@ contract PunksUriAdapter {
       ) {
         slices = slices.concat(attributeCount != 0
           ? _generateAccessoryProp(
-            attributeString.slice(leftCursor, rightCursor)
+            attributeString.slice(
+              leftCursor + 1,
+              i == attributeString.length - 1 ?
+              rightCursor - 1 : rightCursor - 2
+            )
           )
           : _generateTypeProp(
-            attributeString.slice(leftCursor, rightCursor - 3)
+            attributeString.slice(
+              leftCursor,
+              attributeString[leftCursor] == bytes1(0x4D)
+                || attributeString[leftCursor] == bytes1(0x46)
+                ? rightCursor - 3 : rightCursor - 1
+          )
           )
         );
         leftCursor = i + 1;
